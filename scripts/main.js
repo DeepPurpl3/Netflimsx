@@ -35,6 +35,8 @@ async function getApi(choice = "airing_today", pageCategory ="1") {
     try {
         const response = await fetch(`https://api.themoviedb.org/3/tv/${choice}?api_key=6631e5f1dc96088e0d26b86da29b5b6a&page=${pageCategory}`);
         const data = await response.json();
+
+        console.log(data);
         
         return data
     }
@@ -60,7 +62,7 @@ async function displayApi(category = currentCategory, page = currentPage) {
 
         const carte  = createElement("div","card","");
         const titre  = createElement("h2","",`${movie.name}`);
-        const figure = createElement("figure","",`<img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.original_name}">`);
+        const figure = createElement("figure","",`<img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.name}">`);
         const scoreOverlay = createElement('div','score',`${movie.vote_average} /10`)
 
         appendElement(displayCategory, carte);
@@ -75,6 +77,45 @@ async function displayApi(category = currentCategory, page = currentPage) {
 };
 
 displayApi();
+
+async function displayApiPopup(titleMovie) {
+    
+    const movies = await getApi(currentCategory, currentPage);
+    popup.innerHTML ="";
+
+
+    const moviePopup = movies.results.find( movie => movie.name === titleMovie)
+
+    if (moviePopup) {
+         const carte  = createElement("div","card","");
+         const figure = createElement("figure","card__poster",`<img src="https://image.tmdb.org/t/p/w500${moviePopup.backdrop_path}" alt="${moviePopup.name}">`);
+         const description = createElement('div',"card__description","")
+         const titre  = createElement("h2","",`${moviePopup.name}`);
+         const paragraphe = createElement("p","",`${moviePopup.overview}`);
+         const aireDate = createElement("p","",`
+            First Air date ${moviePopup.first_air_date}`)
+         const originCountry = createElement("p","",`Made In ${moviePopup.origin_country}`)
+
+         
+        appendElement(popup, carte);
+        appendElement(carte, figure);
+        appendElement(carte,description);
+        appendElement(description,titre);
+        appendElement(description, paragraphe);
+        appendElement(description,aireDate);
+        appendElement(description,originCountry);
+
+        // bouton enlever la popup
+        const btnClose = createElement("div","close-btn",`❎`)
+        appendElement(popup,btnClose)
+
+        btnClose.addEventListener("click",function(event){
+            event.preventDefault
+
+            popup.classList.remove("active");
+        })
+    }
+}
 
 // ==== Events ====
 btnContainer.addEventListener('click', function (event) {
@@ -119,3 +160,14 @@ nextPage.addEventListener('click',function (event) {
     displayApi(currentCategory, currentPage);
 
 })
+
+displayCategory.addEventListener('click',function (event) {
+    event.preventDefault();
+
+    
+    if (event.target.closest('.card')) {
+        const titleMovie = event.target.closest('.card').querySelector("h2").innerText
+        popup.classList.add('active');
+        displayApiPopup(titleMovie);
+    }
+}) 

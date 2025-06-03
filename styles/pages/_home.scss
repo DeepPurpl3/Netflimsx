@@ -38,6 +38,8 @@ form {
         background-color: rgb(255, 20, 90);
         padding: 1rem 3rem;
         color: white;
+        cursor: pointer;
+        
         &:hover {
             background-color: palevioletred;
 
@@ -99,14 +101,22 @@ form {
     
 }
 .popup {
+    width: 50%;
+    height: 800px;
     padding: 5rem;
-    background-color: $pink-medium;
+    background-color: rgb(159, 117, 27);
     position: fixed;
     top: 5rem; bottom: 5rem;left: 5rem;right: 5rem;
     box-shadow: 0 0 .5rem .3rem;
     display: none;
+    border-radius: 5px;
+     
+    
+
     .card {
         display: flex;
+        flex-direction: column;
+        align-items: center;
         
         &__poster { 
             width: 50%;
@@ -116,6 +126,11 @@ form {
         }
     }
     &.active {
-        display: block;
+        display: block
     }
+}   .close-btn {
+    position: absolute;
+    right: 2rem;
+    top: 2rem;
+    cursor: pointer;
 }
