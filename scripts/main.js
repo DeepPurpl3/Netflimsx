@@ -85,7 +85,7 @@ btnContainer.addEventListener('click', function (event) {
     if(event.target.dataset.category){
         const category = event.target.dataset.category;
         event.target.classList.remove('active');
-        console.log(category,'category btn click');
+        
         
 
         displayApi(category)
@@ -94,14 +94,14 @@ btnContainer.addEventListener('click', function (event) {
 })
 
 backPage.addEventListener('click',function (event) {
-    event.preventDefault
+    event.preventDefault();
 
     numeroPage.innerHTML = ""; 
-    numeroPage.innerHTML = `${movies.page-1}/${movies.total_page}`; 
+    numeroPage.innerHTML = `${movies.page -1}/${movies.total_page}`; 
 })
 nextPage.addEventListener('click',function (event) {
-    event.preventDefault
+    event.preventDefault();
 
     numeroPage.innerHTML = ""; 
-    numeroPage.innerHTML = `${movies.page+1}/${movies.total_page}`; 
+    numeroPage.innerHTML = `${movies.page + 1}/${movies.total_page}`; 
 })
