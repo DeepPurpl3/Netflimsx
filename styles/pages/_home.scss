@@ -2,12 +2,32 @@
 body {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     position: relative;
+    background-color: rgb(55, 20, 20);
+    color: white;
 }
 h1{
     text-align: center;
     color: $white-medium;
-    background-color: $grey-dark;
+    background-color: rgba(159, 117, 27, 0.809);
     padding: 3rem 0 ;
+    border-bottom: 4px solid white ;
+}
+form {
+    text-align: center;
+     button {
+        border-radius: 8px ;
+        border: 0.1rem solid $main-darker;
+        background-color: rgb(255, 20, 90);
+        padding: 1rem 3rem;
+        color: white;
+        &:hover {
+            background-color: palevioletred;
+
+        }
+        &.active {
+            background-color: palevioletred;
+        }
+    }
 }
 .btn-container {
     margin: 3rem 0 ;
@@ -15,10 +35,15 @@ h1{
     button {
         border-radius: 8px ;
         border: 0.1rem solid $main-darker;
-        background-color: $pink-medium;
+        background-color: rgb(255, 20, 90);
         padding: 1rem 3rem;
+        color: white;
         &:hover {
-            background-color: $pink-light;
+            background-color: palevioletred;
+
+        }
+        &.active {
+            background-color: palevioletred;
         }
     }
 }
@@ -27,6 +52,50 @@ h1{
     margin: 3rem auto;
     display: grid;
     grid-template-columns: repeat(5,1fr);
+    gap: 2rem;
+
+    .card {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+
+        .score{
+            display: none;
+        }
+
+        &:hover {
+            &::before {
+                content: "";
+                display: block;
+                width: 100%;
+                height: 400px;
+                background-color: rgba(20, 20, 20, 0.704);
+                position: absolute;
+                bottom: 0;
+            }
+            &   .score{ 
+                width: fit-content;
+                height: fit-content;
+                position: absolute;
+                bottom: 2rem;
+                right: 2rem;
+                z-index: 1;
+                display: block;
+                font-size: 3rem;
+
+            }
+        }
+        h2 {
+            font-size: 1.8rem;
+            flex-grow: 1;
+        }
+    }
+    img {
+        max-height: 400px; 
+        width: 100%;
+        border-radius: 5px;
+        
+    }
     
 }
 .popup {
