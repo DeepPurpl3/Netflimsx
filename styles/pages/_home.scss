@@ -1,0 +1,52 @@
+@use "../abstracts/" as *;
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    position: relative;
+}
+h1{
+    text-align: center;
+    color: $white-medium;
+    background-color: $grey-dark;
+    padding: 3rem 0 ;
+}
+.btn-container {
+    margin: 3rem 0 ;
+    text-align: center;
+    button {
+        border-radius: 8px ;
+        border: 0.1rem solid $main-darker;
+        background-color: $pink-medium;
+        padding: 1rem 3rem;
+        &:hover {
+            background-color: $pink-light;
+        }
+    }
+}
+.display-category{
+    width: 80%;
+    margin: 3rem auto;
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    
+}
+.popup {
+    padding: 5rem;
+    background-color: $pink-medium;
+    position: fixed;
+    top: 5rem; bottom: 5rem;left: 5rem;right: 5rem;
+    box-shadow: 0 0 .5rem .3rem;
+    display: none;
+    .card {
+        display: flex;
+        
+        &__poster { 
+            width: 50%;
+        }
+        &__description {
+            width: 50%;
+        }
+    }
+    &.active {
+        display: block;
+    }
+}
