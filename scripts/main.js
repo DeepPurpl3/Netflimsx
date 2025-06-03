@@ -27,7 +27,8 @@ function appendElement(parent, child) {
 }
 //Variables
 let currentPage = 1;
-let currentCategory = "airing_today"
+let currentCategory    = "airing_today"
+let totalPage = 0;
 
 // ==== Fonctions Fetch => API ====
 async function getApi(choice = "airing_today", pageCategory ="1") {
@@ -42,16 +43,16 @@ async function getApi(choice = "airing_today", pageCategory ="1") {
     }
 }
 
-async function displayApi(category, page) {
-    currentPage = page;
+async function displayApi(category = currentCategory, page = currentPage) {
+    currentPage     = page;
     currentCategory = category;
 
-    const movies = await getApi(category);
-
+    const movies = await getApi(category, page);
+    totalPage = movies.total_pages;
    
 
     numeroPage.innerHTML = ""; 
-    numeroPage.innerHTML = `${movies.page}/${movies.total_pages}`; 
+    numeroPage.innerHTML = `${movies.page}/${totalPage}`; 
 
     displayCategory.innerHTML = ""; 
     
@@ -68,6 +69,9 @@ async function displayApi(category, page) {
         appendElement(carte, scoreOverlay)
     });
 
+    // Mettre à jour l'état des boutons de pagination
+    backPage.disabled = currentPage <= 1;
+    nextPage.disabled = currentPage >= movies.total_pages;
 };
 
 displayApi();
@@ -84,11 +88,14 @@ btnContainer.addEventListener('click', function (event) {
     
     if(event.target.dataset.category){
         const category = event.target.dataset.category;
-        event.target.classList.remove('active');
+        event.target.classList.add('active');
+        
+        currentCategory = category;
+        currentPage = 1;
         
         
 
-        displayApi(category)
+        displayApi(currentCategory, currentPage)
     }
     
 })
@@ -96,12 +103,19 @@ btnContainer.addEventListener('click', function (event) {
 backPage.addEventListener('click',function (event) {
     event.preventDefault();
 
-    numeroPage.innerHTML = ""; 
-    numeroPage.innerHTML = `${movies.page -1}/${movies.total_page}`; 
+    if (currentPage > 1 ) {
+        currentPage -= 1;
+
+        displayApi(currentCategory, currentPage);
+    }
+   
+    
 })
 nextPage.addEventListener('click',function (event) {
     event.preventDefault();
 
-    numeroPage.innerHTML = ""; 
-    numeroPage.innerHTML = `${movies.page + 1}/${movies.total_page}`; 
+    currentPage += 1;
+    
+    displayApi(currentCategory, currentPage);
+
 })
